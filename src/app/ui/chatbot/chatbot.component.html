@@ -1,18 +1,37 @@
-<section class="chatBot-container">
-    <header>
-        <h1>Chatbot</h1>
-    </header>
-    <section>
-        <ul class="messages-container">
-            <li *ngFor="let message of messages" class="message"
-                [ngClass]="{ 'user': message.by == 'user', 'system': message.by == 'system'}" 
-                >
-                {{message.text}}
-            </li>
-        </ul>
-        <div class="write-zone-container">
-            <textarea placeholder="..." [(ngModel)]="actualMessage"></textarea>
-            <span (click)="submit()">></span>
-        </div>
+<body>
+    <section class="chatBot-container">
+        <header>
+            <h1>Chatbot</h1>
+        </header>
+        <section>
+            <ul class="messages-container">
+                <li *ngFor="let message of messages" class="message"
+                    [ngClass]="{ 'user': message.by == 'user', 'system': message.by == 'system'}" 
+                    >
+                    {{message.text}}
+                </li>
+                <span *ngIf="showIndicator" [ngClass]="{ 
+                        'user': actualMessage != '', 
+                        'system': systemMessage != ''
+                    }" 
+                    class="indicator">
+                    <div class="indicator-1"></div>
+                    <div class="indicator-2"></div>
+                    <div class="indicator-3"></div>
+                </span>
+            </ul>
+            <div class="write-zone-container">
+                <textarea placeholder="Puedes escribir aquí..." 
+                    [(ngModel)]="actualMessage"
+                    (keyup)="keyUpHandler()"
+                    ></textarea>
+                <span (click)="submit()">></span>
+                <span class="borrar" (click)="clear()">🗑️</span>
+            </div>
+        </section>
     </section>
-</section>
+    <div class="save-log"> 
+        <button (click)="save()">Guardar conversacion</button>
+        <button (click)="setConversation()">Cargar conversacion</button>
+    </div>
+</body>

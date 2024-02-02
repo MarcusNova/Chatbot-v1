@@ -34,6 +34,7 @@
             list-style: none;
             display: flex;
             flex-direction: column;
+            overflow-y: scroll;
             li.system {                
                 background-color: var(--primary-gray);
                 width: fit-content;
@@ -43,8 +44,7 @@
                 color: #1B1B20;
                 align-self: flex-start;
             }
-            li.user {
-                
+            li.user {                
                 background-color: var(--main-color);
                 width: fit-content;
                 border-radius: 10px 10px 0;
@@ -54,6 +54,39 @@
                 align-self: flex-start;
                 align-self: flex-end;
             }
+            span.indicator {
+                display: flex;
+                gap: 5px;
+                margin-inline: 10px;
+                div {
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+                }
+                .indicator-1 {
+                    animation: move 600ms infinite;
+                }
+                .indicator-2 {
+                    animation: move 600ms infinite;
+                    animation-delay: 700ms;
+                }
+                .indicator-3 {
+                    animation: move 600ms infinite;
+                    animation-delay: 1s;
+                }
+            }
+            span.user {
+                align-self: flex-end;
+                div {
+                    background-color: var(--main-color);
+                }
+            }
+            span.system {
+                align-self: flex-start;
+                div {
+                    background-color: var(--primary-gray);
+               }
+            }
         }
         div.write-zone-container {
             height: 10%;
@@ -62,7 +95,7 @@
             border-top: 1px solid #ccc;
             display: flex;
             textarea {
-                width: 90%;
+                width: 80%;
                 height: 100%;
                 padding: 16px;
                 box-sizing: border-box;
@@ -80,6 +113,40 @@
             span:hover {
                 cursor: pointer;
             }
+            span.borrar {
+                font-size: 0.8rem;
+            }
         }
+    }
+}
+div.save-log {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    button {
+        height: 60px;
+        width: fit-content;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        background-color: var(--main-color);
+    }
+    button:hover {
+        cursor: pointer;
+    }
+}
+
+@keyframes move {
+    25% {
+        transform: translateY(3px);
+    }
+    75% {
+        transform: translateY(-3px);
+    }
+    0%, 50%, 100% {
+        transform: translateY(0);
     }
 }

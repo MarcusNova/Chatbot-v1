@@ -6,7 +6,7 @@ import { Component } from "@angular/core";
     selector: 'app-chatbot-selectop'
 })
 export class ChatBotComponent {
-    messages = [
+    startMessages = [        
         {
             text: 'Hola de nuevo ✌️',
             by: 'system'
@@ -16,7 +16,24 @@ export class ChatBotComponent {
             by: 'system'
         }
     ]
+    messages = [...this.startMessages]
+    pastConversation: any[] = [];
     actualMessage: string = '';
+    systemMessage: string = '';
+    showIndicator: boolean = false;
+    readonly SESSION_KEY = 'conversation';
+    
+    ngOnInit() {
+        const getPastConversation = window.sessionStorage.getItem(this.SESSION_KEY)
+        if (getPastConversation) {
+            const toParse = JSON.parse(getPastConversation);
+            this.pastConversation = [...toParse];
+        }
+     }
+
+    keyUpHandler() {
+        this.showIndicator = true;
+    }
 
     submit() {
         console.log("El usuario ingreso el mensaje", this.actualMessage);
@@ -24,12 +41,31 @@ export class ChatBotComponent {
             {
                 text: this.actualMessage,
                 by: 'user'
-            },
-            {
-                text: 'Lorem ipsum',
-                by: 'system'
-            }
+            }        
         )
         this.actualMessage = '';
+        this.systemMessage = 'respondiendo...'
+        setTimeout(() => {
+            this.showIndicator = false;
+            this.systemMessage = '';
+            this.messages.push({
+                text: 'LOREM',
+                by: 'system'
+            })
+        }, 1000)
+    }
+    clear() {
+        this.messages = [
+            ...this.startMessages
+        ]
+        this.actualMessage = '';
+    }
+    save() {
+        window.sessionStorage.setItem(this.SESSION_KEY, JSON.stringify(this.messages))
+    }
+    setConversation() {
+        if (this.pastConversation.length > 0) {
+            this.messages = [...this.pastConversation]
+        }
     }
 }
